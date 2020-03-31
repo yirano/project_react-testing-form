@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, getByLabelText } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import ContactForm from '../ContactForm'
 import { act } from 'react-dom/test-utils'
 

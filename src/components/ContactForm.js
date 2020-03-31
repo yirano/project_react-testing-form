@@ -9,7 +9,7 @@ const ContactForm = () => {
   const onSubmit = data => {
     setData(data);
     reset();
-    // console.log(data);
+    console.log(data);
   };
 
   return (
