@@ -1,17 +1,29 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect';
 import ContactForm from '../ContactForm'
-import { act } from 'react-dom/test-utils'
+import { act } from 'react-dom/test-utils';
 
-test("renders Contact form", async () => {
-  const { getByText } = render(<ContactForm />)
-  const button = getByText(/submit/i);
-  const firstName = getByText(/first Name/i)
-  console.log(document.body.pre);
-  act(() => {
-    fireEvent.click(button)
-  })
+test('Renders form', async () => {
+  // Arrange
+  const { getByText, getByPlaceholderText, getByTestId } = render(<ContactForm />)
+  const bogeyFirstName = "Tiffany"
+  const bogeyLastName = "Arellano"
+  const bogeyEmail = "tiffany.arellano@outlook.com"
+  const firstName = getByPlaceholderText('bill')
+  const lastName = getByTestId('lastName')
+  const email = getByTestId('email')
+  const button = getByTestId('submit')
+  // const print = getByTestId('print-out')
 
-  expect(firstName).toHaveValue(/bill/i)
+  firstName.innerHTML = bogeyFirstName
+  lastName.innerHTML = bogeyLastName
+  email.innerHTML = bogeyEmail
+  // Act
+  fireEvent.click(button)
+  // Assert
 
+  // expect(print).toBeTruthy();
+  // expect(firstName).toBeTruthy();
+  expect(firstName).toHaveTextContent(bogeyFirstName)
 })

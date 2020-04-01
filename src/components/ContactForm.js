@@ -9,7 +9,7 @@ const ContactForm = () => {
   const onSubmit = data => {
     setData(data);
     reset();
-    console.log(data);
+    // console.log(data);
   };
 
   return (
@@ -18,9 +18,9 @@ const ContactForm = () => {
         <div>
           <label htmlFor="firstName">First Name*</label>
           <input
-            name="firstName"
+            data-testid="firstName"
             placeholder="bill"
-            ref={register({ required: true })}
+            ref={register({ required: true, maxLength: 3 })}
           />
           {errors.firstName && (
             <p>Looks like there was an error: {errors.firstName.type}</p>
@@ -30,7 +30,7 @@ const ContactForm = () => {
         <div>
           <label htmlFor="lastName">Last Name*</label>
           <input
-            name="lastName"
+            data-testid="lastName"
             placeholder="luo"
             ref={register({ required: true })}
           />
@@ -40,7 +40,9 @@ const ContactForm = () => {
         </div>
 
         <div>
-          <label htmlFor="email" placeholder="bluebill1049@hotmail.com">
+          <label
+            data-testid="email"
+            htmlFor="email" placeholder="bluebill1049@hotmail.com">
             Email*
           </label>
           <input name="email" ref={register({ required: true })} />
@@ -53,11 +55,13 @@ const ContactForm = () => {
           <textarea name="message" ref={register({ required: false })} />
         </div>
         {data && (
-          <pre style={{ textAlign: "left", color: "white" }}>
-            {JSON.stringify(data, null, 2)}
-          </pre>
+          <div data-testid='print-out' >
+            <pre style={{ textAlign: "left", color: "white" }}>
+              {JSON.stringify(data, null, 2)}
+            </pre>
+          </div>
         )}
-        <button>submit</button>
+        <input type="submit" data-testid="submit" />
       </form>
     </div>
   );
