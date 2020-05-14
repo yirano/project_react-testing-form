@@ -1,29 +1,37 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 import ContactForm from '../ContactForm'
-import { act } from 'react-dom/test-utils';
 
-test('Renders form', async () => {
+
+
+test('Fills out form', async () => {
   // Arrange
-  const { getByText, getByPlaceholderText, getByTestId } = render(<ContactForm />)
-  const bogeyFirstName = "Tiffany"
-  const bogeyLastName = "Arellano"
-  const bogeyEmail = "tiffany.arellano@outlook.com"
-  const firstName = getByPlaceholderText('bill')
+  const { getByTestId, findByTestId } = render(<ContactForm />)
+
+  const expectedFirstName = "Tiffany"
+  const expectedLastName = "Arellano"
+  const expectedEmail = "tiffany@email.com"
+
+  const firstName = getByTestId('firstName')
   const lastName = getByTestId('lastName')
   const email = getByTestId('email')
-  const button = getByTestId('submit')
-  // const print = getByTestId('print-out')
 
-  firstName.innerHTML = bogeyFirstName
-  lastName.innerHTML = bogeyLastName
-  email.innerHTML = bogeyEmail
+  const button = getByTestId('submit')
+
+
+
   // Act
+  fireEvent.change(firstName, { target: { value: 'Tiffany' } })
+  fireEvent.change(lastName, { target: { value: 'Arellano' } })
+  fireEvent.change(email, { target: { value: 'tiffany@email.com' } })
   fireEvent.click(button)
+
   // Assert
 
-  // expect(print).toBeTruthy();
-  // expect(firstName).toBeTruthy();
-  expect(firstName).toHaveTextContent(bogeyFirstName)
+  expect(firstName.value).toBe(expectedFirstName)
+  expect(lastName.value).toBe(expectedLastName)
+  expect(email.value).toBe(expectedEmail)
+
+  await waitFor(() => findByTestId('print-out'))
 })
