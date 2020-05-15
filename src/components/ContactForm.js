@@ -12,24 +12,27 @@ const ContactForm = () => {
     // console.log(data);
   };
 
+  console.log(data);
   return (
     <div className="App">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="firstName">First Name*</label>
           <input
+            name="firstName"
             data-testid="firstName"
             className="firstName"
-            ref={register({ required: true, maxLength: 3 })}
+            ref={register({ required: true, minLength: 3 })}
           />
           {errors.firstName && (
-            <p>Looks like there was an error: {errors.firstName.type}</p>
+            <p data-testid="firstName-error">Looks like there was an error: {errors.firstName.type}</p>
           )}
         </div>
 
         <div>
           <label htmlFor="lastName">Last Name*</label>
           <input
+            name="lastName"
             data-testid="lastName"
             ref={register({ required: true })}
           />
