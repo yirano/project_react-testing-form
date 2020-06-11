@@ -8,8 +8,11 @@ const ContactForm = () => {
   });
   const onSubmit = data => {
     setData(data);
+    reset();
+    // console.log(data);
   };
 
+  console.log(data);
   return (
     <div className="App">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -17,11 +20,12 @@ const ContactForm = () => {
           <label htmlFor="firstName">First Name*</label>
           <input
             name="firstName"
-            placeholder="bill"
-            ref={register({ required: true, maxLength: 3 })}
+            data-testid="firstName"
+            className="firstName"
+            ref={register({ required: true, minLength: 3 })}
           />
           {errors.firstName && (
-            <p>Looks like there was an error: {errors.firstName.type}</p>
+            <p data-testid="firstName-error">Looks like there was an error: {errors.firstName.type}</p>
           )}
         </div>
 
@@ -29,7 +33,7 @@ const ContactForm = () => {
           <label htmlFor="lastName">Last Name*</label>
           <input
             name="lastName"
-            placeholder="luo"
+            data-testid="lastName"
             ref={register({ required: true })}
           />
           {errors.lastName && (
@@ -38,10 +42,13 @@ const ContactForm = () => {
         </div>
 
         <div>
-          <label htmlFor="email" placeholder="bluebill1049@hotmail.com">
+          <label
+            htmlFor="email" >
             Email*
           </label>
-          <input name="email" ref={register({ required: true })} />
+          <input name="email"
+            data-testid="email"
+            ref={register({ required: true })} />
           {errors.email && (
             <p>Looks like there was an error: {errors.email.type}</p>
           )}
@@ -51,11 +58,13 @@ const ContactForm = () => {
           <textarea name="message" ref={register({ required: false })} />
         </div>
         {data && (
-          <pre style={{ textAlign: "left", color: "white" }}>
-            {JSON.stringify(data, null, 2)}
-          </pre>
+          <div data-testid='print-out' >
+            <pre style={{ textAlign: "left", color: "white" }}>
+              {JSON.stringify(data, null, 2)}
+            </pre>
+          </div>
         )}
-        <input type="submit" />
+        <input type="submit" data-testid="submit" />
       </form>
     </div>
   );
